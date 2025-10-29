@@ -1,0 +1,17 @@
+node_modules
+npm-debug.log
+.env
+.env.*
+.git
+.gitignore
+.DS_Store
+*.log
+.vscode
+.idea
+client/node_modules
+client/build
+coverage
+*.md
+!.env.example
+prisma/migrations/*.sql.bak
+

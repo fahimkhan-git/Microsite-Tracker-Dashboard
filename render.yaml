@@ -5,6 +5,7 @@ services:
     buildCommand: npm install && npx prisma generate
     startCommand: npm start
     healthCheckPath: /health
+    plan: free  # Free tier
     envVars:
       - key: NODE_ENV
         value: production
@@ -12,6 +13,15 @@ services:
         value: false
       - key: USE_TEMP_STORAGE
         value: false
-      # DATABASE_URL should be set in Render dashboard, not here!
-      # PORT and CLIENT_URL should also be set in dashboard
+      # ⚠️ IMPORTANT: DATABASE_URL should be set in Render dashboard, not here!
+      # ⚠️ PORT and CLIENT_URL should also be set in dashboard
+      # ⚠️ Never commit production DATABASE_URL to Git!
+
+  # Optional: PostgreSQL database (free tier)
+  # Uncomment if you want Render to host your database
+  # - type: pg
+  #   name: microsite-tracker-db
+  #   plan: free  # Free tier
+  #   databaseName: microsite_tracker
+  #   user: microsite_user
 
