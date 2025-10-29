@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: microsite-tracker-backend
+    env: node
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: IS_LOCAL
+        value: false
+      - key: USE_TEMP_STORAGE
+        value: false
+      # DATABASE_URL should be set in Render dashboard, not here!
+      # PORT and CLIENT_URL should also be set in dashboard
+

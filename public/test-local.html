@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Testing Page</title>
+    
+    <!-- Load tracking script from localhost -->
+    <script src="http://localhost:3001/tracking.js"></script>
+    
+    <!-- Configuration -->
+    <script>
+    window.LiveAnalyticsConfig = {
+        gtmId: "GTM-5PHH5D6T",
+        siteName: "localhost-test",
+        siteUrl: "http://localhost:3001"
+    };
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .success-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        .warning-box {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #FF9800;
+        }
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .test-links {
+            margin: 20px 0;
+        }
+        .test-links a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .test-links a:hover {
+            background: #5568d3;
+        }
+        form {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        input, button {
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 14px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: auto;
+            padding: 12px 30px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Local Testing Page</h1>
+        <p class="subtitle">Test your tracking script locally</p>
+        
+        <div class="info-box">
+            <strong>📋 Current Configuration:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li><strong>Script URL:</strong> <code>http://localhost:3001/tracking.js</code></li>
+                <li><strong>API URL:</strong> <code>http://localhost:3001/api</code></li>
+                <li><strong>Site Name:</strong> <code>localhost-test</code></li>
+                <li><strong>GTM ID:</strong> <code>GTM-5PHH5D6T</code></li>
+            </ul>
+        </div>
+        
+        <div class="warning-box">
+            <strong>⚠️ Testing Instructions:</strong>
+            <ol style="margin: 10px 0; padding-left: 20px;">
+                <li>Make sure your local server is running: <code>npm run dev</code></li>
+                <li>Add Google Ads parameters to URL below to simulate Google Ads traffic</li>
+                <li>Submit the form to test lead tracking</li>
+                <li>Check your dashboard at <code>http://localhost:3000</code></li>
+            </ol>
+        </div>
+        
+        <div class="test-links">
+            <h3>Test Visits (Click to simulate Google Ads traffic):</h3>
+            <a href="?gclid=test123">Test with gclid</a>
+            <a href="?utm_source=google&utm_medium=cpc&utm_campaign=test">Test with UTM</a>
+            <a href="?gclid=test123&utm_source=google&utm_medium=cpc">Test with both</a>
+        </div>
+        
+        <div class="success-box">
+            <strong>✅ What Gets Tracked:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>Page views (only with Google Ads parameters)</li>
+                <li>Form submissions (automatically)</li>
+                <li>Real-time updates to dashboard</li>
+            </ul>
+        </div>
+        
+        <h3>Test Form Submission</h3>
+        <p>Submit this form to test lead tracking:</p>
+        
+        <form id="testForm">
+            <div>
+                <input type="text" name="name" placeholder="Your Name" required>
+            </div>
+            <div>
+                <input type="email" name="email" placeholder="Your Email" required>
+            </div>
+            <div>
+                <input type="tel" name="phone" placeholder="Your Phone (optional)">
+            </div>
+            <div>
+                <button type="submit">Submit Test Lead</button>
+            </div>
+        </form>
+        
+        <div id="status" class="status"></div>
+        
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+            <h3>📊 Check Your Dashboard</h3>
+            <p>Open your dashboard to see tracked visits and leads:</p>
+            <a href="http://localhost:3000" target="_blank" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: #48bb78; color: white; text-decoration: none; border-radius: 6px;">
+                Open Dashboard →
+            </a>
+            <p style="margin-top: 10px; color: #666; font-size: 0.9em;">
+                Note: Server now runs on port 3001 to avoid macOS AirPlay conflict
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Handle form submission
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const statusDiv = document.getElementById('status');
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'status success';
+            statusDiv.innerHTML = '✅ Form submitted! Check your dashboard at <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> to see the lead.';
+            
+            // Reset form after a moment
+            setTimeout(() => {
+                this.reset();
+            }, 2000);
+        });
+        
+        // Show current URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('gclid') || urlParams.has('utm_source')) {
+            const infoBox = document.querySelector('.info-box');
+            infoBox.innerHTML += '<div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #90caf9;"><strong>🔍 Current URL Parameters:</strong><br>';
+            for (const [key, value] of urlParams) {
+                infoBox.innerHTML += `<code>${key}=${value}</code> `;
+            }
+            infoBox.innerHTML += '</div>';
+        }
+    </script>
+</body>
+</html>
+

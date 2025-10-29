@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Microsite - Tracking Demo</title>
+    
+    <!-- Universal Tracking Script -->
+    <!-- Update this URL to your actual API domain -->
+    <script src="http://localhost:5000/tracking.js"></script>
+    
+    <!-- Configuration for this microsite -->
+    <script>
+    window.LiveAnalyticsConfig = {
+        gtmId: "GTM-5PHH5D6T",  // Your GTM ID for this microsite
+        siteName: "www.homesfytestwebsite.com",  // Domain name
+        siteUrl: "https://www.homesfytestwebsite.com"  // Full site URL
+    };
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: auto;
+            padding: 10px 20px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 Homesfy Test Website</h1>
+        <p>This is an example microsite with tracking enabled.</p>
+        
+        <div class="info">
+            <strong>📊 Tracking Status:</strong>
+            <ul>
+                <li>✅ Tracking script loaded</li>
+                <li>✅ Config set for: www.homesfytestwebsite.com</li>
+                <li>✅ GTM ID: GTM-5PHH5D6T</li>
+                <li>✅ Auto-tracking visits and leads</li>
+            </ul>
+            
+            <p><strong>🧪 Test Tracking:</strong></p>
+            <p>Add <code>?gclid=test123</code> to URL to simulate Google Ads traffic</p>
+        </div>
+        
+        <h2>Contact Form</h2>
+        <p>Submit this form to test lead tracking:</p>
+        
+        <form id="contactForm">
+            <div>
+                <input type="text" name="name" placeholder="Your Name" required>
+            </div>
+            <div>
+                <input type="email" name="email" placeholder="Your Email" required>
+            </div>
+            <div>
+                <input type="tel" name="phone" placeholder="Your Phone">
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        
+        <div id="formMessage" style="margin-top: 20px; display: none;"></div>
+    </div>
+    
+    <script>
+        // Handle form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const messageDiv = document.getElementById('formMessage');
+            
+            // Note: trackMicrositeLead is automatically called by the tracking script
+            // This is just for demo purposes to show the form was submitted
+            
+            messageDiv.style.display = 'block';
+            messageDiv.innerHTML = '<strong style="color: green;">✅ Form submitted! Lead should be tracked in dashboard.</strong>';
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>
+
