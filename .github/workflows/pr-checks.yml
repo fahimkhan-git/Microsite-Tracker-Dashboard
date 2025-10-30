@@ -1,0 +1,90 @@
+name: PR Security Checks
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  check-sensitive-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Check for .env files
+        run: |
+          if git ls-files | grep -q "^\.env$"; then
+            echo "❌ ERROR: .env file should not be committed!"
+            echo "Please remove it: git rm --cached .env"
+            exit 1
+          fi
+          
+          if git ls-files | grep -q "^\.env\."; then
+            echo "❌ ERROR: .env.* files should not be committed!"
+            echo "Please remove them and add to .gitignore"
+            exit 1
+          fi
+          
+          echo "✅ No .env files found in commit"
+      
+      - name: Check for production database URLs
+        run: |
+          if git diff origin/main...HEAD | grep -i "postgresql://.*supabase.*postgres" || \
+             git diff origin/main...HEAD | grep -i "DATABASE_URL.*supabase"; then
+            echo "⚠️ WARNING: Production database URL detected in code changes!"
+            echo "Please ensure you're using environment variables, not hardcoded URLs"
+            echo "Review the changes carefully before merging"
+          else
+            echo "✅ No hardcoded production database URLs found"
+          fi
+      
+      - name: Check for USE_TEMP_STORAGE=false in commits
+        run: |
+          if git diff origin/main...HEAD | grep -q "USE_TEMP_STORAGE=false" && \
+             git diff origin/main...HEAD | grep -v "NODE_ENV=production"; then
+            echo "⚠️ WARNING: USE_TEMP_STORAGE=false found in non-production context"
+            echo "This should only be set in production environment"
+          else
+            echo "✅ USE_TEMP_STORAGE usage looks correct"
+          fi
+
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Generate Prisma client
+        run: npx prisma generate
+      
+      - name: Build frontend
+        run: npm run client:build
+      
+      - name: Check server.js syntax
+        run: node --check server.js
+      
+      - name: Check for required files
+        run: |
+          if [ ! -f ".env.example" ]; then
+            echo "❌ ERROR: .env.example file is missing!"
+            exit 1
+          fi
+          
+          if [ ! -f ".gitignore" ]; then
+            echo "❌ ERROR: .gitignore file is missing!"
+            exit 1
+          fi
+          
+          if ! grep -q "\.env" .gitignore; then
+            echo "⚠️ WARNING: .env not found in .gitignore"
+          fi
+          
+          echo "✅ All required files present"
+
