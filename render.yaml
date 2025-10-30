@@ -4,6 +4,7 @@ services:
     env: node
     buildCommand: npm install && cd client && npm install && cd .. && npx prisma generate && npm run client:build
     startCommand: npm start
+    # Note: No deployCommand needed - Render just builds and starts the server
     healthCheckPath: /health
     plan: free  # Free tier
     envVars:
