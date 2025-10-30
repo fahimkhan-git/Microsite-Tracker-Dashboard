@@ -18,15 +18,10 @@ RUN npm ci
 # Generate Prisma client
 RUN npx prisma generate
 
-# Copy client files
-COPY client/package*.json ./client/
-RUN cd client && npm install
-
-# Copy all source files
-COPY . .
-
-# Build client
-RUN npm run client:build
+# Copy backend source files only
+COPY server.js ./
+COPY utils ./utils
+COPY public ./public
 
 # Production stage
 FROM node:18-bullseye-slim
@@ -50,7 +45,6 @@ RUN npx prisma generate
 
 # Copy built files from builder
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/client/build ./client/build
 
 # Copy server files
 COPY server.js ./
