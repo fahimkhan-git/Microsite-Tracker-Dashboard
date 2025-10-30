@@ -1,10 +1,12 @@
 # Multi-stage build for production
-FROM node:18-alpine AS builder
+FROM node:18-bullseye-slim AS builder
 
 WORKDIR /app
 
-# Install required system dependencies for Prisma (musl + OpenSSL 1.1)
-RUN apk add --no-cache openssl1.1-compat
+# Install required system dependencies for Prisma (glibc + OpenSSL 1.1)
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates openssl libssl1.1 \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy package files
 COPY package*.json ./
@@ -27,12 +29,14 @@ COPY . .
 RUN npm run client:build
 
 # Production stage
-FROM node:18-alpine
+FROM node:18-bullseye-slim
 
 WORKDIR /app
 
-# Install required system dependencies for Prisma at runtime (musl + OpenSSL 1.1)
-RUN apk add --no-cache openssl1.1-compat
+# Install required system dependencies for Prisma at runtime (glibc + OpenSSL 1.1)
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates openssl libssl1.1 \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy package files
 COPY package*.json ./
