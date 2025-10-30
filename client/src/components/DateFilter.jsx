@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiCalendar, FiDownload } from 'react-icons/fi';
-import { API_URL } from '../../config';
+import { API_URL } from '../config';
 import './DateFilter.css';
 
 // Use centralized resolved API URL

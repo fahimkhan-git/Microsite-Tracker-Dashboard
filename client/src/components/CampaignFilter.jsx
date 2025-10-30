@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FiFilter, FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import axios from 'axios';
-import { API_URL } from '../../config';
+import { API_URL } from '../config';
 import './CampaignFilter.css';
 
 // Use centralized resolved API URL

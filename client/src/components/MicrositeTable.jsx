@@ -2,7 +2,7 @@ import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { FiExternalLink, FiRefreshCw } from 'react-icons/fi';
 import axios from 'axios';
-import { API_URL } from '../../config';
+import { API_URL } from '../config';
 import './MicrositeTable.css';
 
 // Use centralized resolved API URL
