@@ -447,18 +447,9 @@ wss.on('connection', (ws) => {
 });
 
 // Start HTTP server with Express app
-// Use PORT from environment (Render/Fly.io sets this automatically)
-const SERVER_PORT = process.env.PORT || PORT;
-
-server.listen(SERVER_PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${SERVER_PORT}`);
-  console.log(`📡 WebSocket server running on port ${SERVER_PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`📊 Storage Mode: ${storage.getStorageMode()}`);
-  
-  if (process.env.RENDER) {
-    console.log(`☁️ Deployed on Render`);
-  }
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`📡 WebSocket server running on ws://localhost:${PORT}`);
 });
 
 // Cron job to cleanup old data (every minute for local testing)

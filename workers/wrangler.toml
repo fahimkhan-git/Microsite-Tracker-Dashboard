@@ -1,0 +1,25 @@
+name = "microsite-tracker"
+main = "src/worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Environment variables (set via Cloudflare dashboard or wrangler secret)
+# BACKEND_URL should be set as a secret: wrangler secret put BACKEND_URL
+# Example: https://your-app.onrender.com
+
+# Production environment
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+# Preview environment (for testing)
+[env.preview]
+vars = { ENVIRONMENT = "preview" }
+
+# Site configuration for serving tracking.js
+# You can also use workers.dev subdomain
+# [site]
+# bucket = "./public"
+
+# Limits
+limits = { cpu_ms = 50 }
+

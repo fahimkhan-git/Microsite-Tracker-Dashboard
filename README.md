@@ -168,16 +168,32 @@ CLIENT_URL=https://your-frontend-domain.com
 
 ## Tracking Script Installation
 
+### Recommended: Use Cloudflare Worker (No Sleep, Fast)
+
 Add to each microsite's HTML:
 
 ```html
 <script>
   window.LiveAnalyticsConfig = {
-    apiUrl: 'https://your-backend-url.railway.app/api',
+    apiUrl: 'https://microsite-tracker.your-subdomain.workers.dev/api',
     domain: 'your-microsite-domain.com'
   };
 </script>
-<script src="https://your-backend-url.railway.app/tracking.js"></script>
+<script src="https://microsite-tracker.your-subdomain.workers.dev/tracking.js"></script>
+```
+
+**Benefits:** ✅ Always available (no sleep), ✅ Global edge network, ✅ Free
+
+### Alternative: Direct to Backend
+
+```html
+<script>
+  window.LiveAnalyticsConfig = {
+    apiUrl: 'https://your-backend-url.onrender.com/api',
+    domain: 'your-microsite-domain.com'
+  };
+</script>
+<script src="https://your-backend-url.onrender.com/tracking.js"></script>
 ```
 
 ---
@@ -219,18 +235,40 @@ git push origin feature/my-feature
 
 ## Deployment
 
-### Railway (Recommended)
+### Architecture (Hybrid Approach)
 
-1. Connect GitHub repo to Railway
-2. Add environment variables in Railway dashboard
-3. Railway auto-deploys on push to `main`
+- **Cloudflare Worker**: Tracking endpoints (edge, no sleep, free)
+- **Express Backend**: Dashboard APIs (Render/Fly.io/any hosting)
 
-### Render
+### Cloudflare Worker Setup
 
-1. Connect GitHub repo to Render
-2. Configure build/start commands
-3. Add environment variables
-4. Deploy
+**Recommended for tracking endpoints:**
+1. See [CLOUDFLARE_WORKER_SETUP.md](./CLOUDFLARE_WORKER_SETUP.md) for full guide
+2. Quick setup:
+   ```bash
+   cd workers
+   npm install
+   wrangler login
+   wrangler secret put BACKEND_URL  # Your Express backend URL
+   wrangler deploy
+   ```
+3. Get Worker URL: `https://microsite-tracker.your-subdomain.workers.dev`
+4. Update tracking script in microsites to use Worker URL
+
+### Express Backend Setup
+
+**Option 1: Render (Recommended)**
+- See [QUICK_DEPLOY.md](./QUICK_DEPLOY.md)
+- 750 hours/month free
+- Auto-deploy from GitHub
+
+**Option 2: Fly.io**
+- Always-on free tier
+- See [HOSTING_OPTIONS.md](./HOSTING_OPTIONS.md)
+
+**Option 3: Railway**
+- Similar to Render
+- Good if within limits
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
 
