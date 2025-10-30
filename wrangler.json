@@ -1,8 +1,6 @@
 {
   "name": "microsite-tracker-dashboard",
   "compatibility_date": "2025-10-30",
-  "assets": {
-    "directory": "./client/build"
-  }
+  "pages_build_output_dir": "./client/build"
 }
 
