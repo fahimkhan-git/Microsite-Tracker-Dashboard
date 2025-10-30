@@ -13,7 +13,7 @@
     "prisma:studio": "npx prisma studio",
     "prisma:deploy": "npx prisma migrate deploy",
     "setup": "npm install && cd client && npm install && cd .. && npx prisma generate",
-    "build": "npm install && npx prisma generate && npm run client:build"
+    "build": "npm install && cd client && npm install && cd .. && npx prisma generate && npm run client:build"
   },
   "engines": {
     "node": ">=18.0.0",

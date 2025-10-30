@@ -446,6 +446,19 @@ wss.on('connection', (ws) => {
   });
 });
 
+// Serve static files from React app build (must be after all API routes)
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+// Serve React app for all non-API routes (catch-all, must be last)
+app.get('*', (req, res) => {
+  // Don't serve React app for API routes, tracking.js, or test page
+  if (req.path.startsWith('/api') || req.path.startsWith('/tracking.js') || req.path.startsWith('/test-local.html')) {
+    return res.status(404).json({ error: 'Not found' });
+  }
+  // Serve React app
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
+
 // Start HTTP server with Express app
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
