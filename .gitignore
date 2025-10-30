@@ -37,5 +37,16 @@ render.yaml.local
 # OS
 Thumbs.db
 .DS_Store
+**/.DS_Store
 
 .env.bak
+
+# Cloudflare Workers
+workers/.wrangler/
+workers/node_modules/
+workers/.dev.vars
+
+# Build outputs
+client/build/
+dist/
+build/
