@@ -1,8 +1,9 @@
 import React from 'react';
 import { FiCalendar, FiDownload } from 'react-icons/fi';
+import { API_URL } from '../../config';
 import './DateFilter.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+// Use centralized resolved API URL
 
 const DateFilter = ({ dateRange, setDateRange, onDateChange, regionFilter, campaignFilter, sortBy, sortOrder }) => {
   const handleDatePreset = (preset) => {

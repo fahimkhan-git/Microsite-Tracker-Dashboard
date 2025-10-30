@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { API_URL, WS_URL } from './config';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
 import './App.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
-const WS_URL = process.env.REACT_APP_WS_URL || 'ws://localhost:3001';
+// URLs resolved via ./config
 
 function App() {
   const [microsites, setMicrosites] = useState([]);

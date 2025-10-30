@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FiFilter, FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import './CampaignFilter.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+// Use centralized resolved API URL
 
 const CampaignFilter = ({ campaignFilter, setCampaignFilter, regionFilter, dateRange, sortBy, setSortBy, sortOrder, setSortOrder }) => {
   const [campaigns, setCampaigns] = useState([]);

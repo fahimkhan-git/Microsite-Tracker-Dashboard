@@ -2,9 +2,10 @@ import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { FiExternalLink, FiRefreshCw } from 'react-icons/fi';
 import axios from 'axios';
+import { API_URL } from '../../config';
 import './MicrositeTable.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+// Use centralized resolved API URL
 
 const MicrositeTable = ({ microsites, onRefresh }) => {
   const handleCheckStatus = async (domain) => {
