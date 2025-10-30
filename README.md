@@ -352,3 +352,7 @@ ISC
 - GitHub Issues: https://github.com/khanfahim2025/Microsite-Tracker-Dashboard/issues
 - Check logs in Railway/Render dashboard
 - Review [DEPLOYMENT.md](./DEPLOYMENT.md) for troubleshooting
+
+
+---
+Initial PR to set up repository.
