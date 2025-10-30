@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { FiExternalLink, FiRefreshCw, FiCheckCircle, FiXCircle, FiAlertCircle } from 'react-icons/fi';
+import { FiExternalLink, FiRefreshCw } from 'react-icons/fi';
 import axios from 'axios';
 import './MicrositeTable.css';
 

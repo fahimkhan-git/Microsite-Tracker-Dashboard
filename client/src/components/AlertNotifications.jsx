@@ -9,12 +9,14 @@ const AlertNotifications = ({ microsites, dateRange }) => {
     const now = new Date();
     
     // Determine time ranges based on date filter or default to 24h
-    let checkPeriod = 24; // Default to 24 hours
-    if (dateRange && dateRange.startDate && dateRange.endDate) {
-      const start = new Date(dateRange.startDate);
-      const end = new Date(dateRange.endDate);
-      checkPeriod = (end - start) / (1000 * 60 * 60); // Hours in date range
-    }
+    // Note: Currently using fixed thresholds (24h, 48h, 72h) instead of dynamic date range
+    // If you want to use checkPeriod, uncomment and use it:
+    // let checkPeriod = 24; // Default to 24 hours
+    // if (dateRange && dateRange.startDate && dateRange.endDate) {
+    //   const start = new Date(dateRange.startDate);
+    //   const end = new Date(dateRange.endDate);
+    //   checkPeriod = (end - start) / (1000 * 60 * 60); // Hours in date range
+    // }
     
     microsites.forEach((site, index) => {
       const lastActivity = new Date(site.lastActivity);

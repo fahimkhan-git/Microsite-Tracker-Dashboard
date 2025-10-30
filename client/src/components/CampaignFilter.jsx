@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FiFilter, FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import axios from 'axios';
 import './CampaignFilter.css';
@@ -9,11 +9,7 @@ const CampaignFilter = ({ campaignFilter, setCampaignFilter, regionFilter, dateR
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchCampaigns();
-  }, [regionFilter, dateRange]);
-
-  const fetchCampaigns = async () => {
+  const fetchCampaigns = useCallback(async () => {
     try {
       setLoading(true);
       const params = {};
@@ -29,7 +25,11 @@ const CampaignFilter = ({ campaignFilter, setCampaignFilter, regionFilter, dateR
     } finally {
       setLoading(false);
     }
-  };
+  }, [regionFilter, dateRange]);
+
+  useEffect(() => {
+    fetchCampaigns();
+  }, [fetchCampaigns]);
 
   const handleSortChange = (newSortBy) => {
     if (sortBy === newSortBy) {

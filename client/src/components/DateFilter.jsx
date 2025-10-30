@@ -1,6 +1,5 @@
 import React from 'react';
 import { FiCalendar, FiDownload } from 'react-icons/fi';
-import axios from 'axios';
 import './DateFilter.css';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';

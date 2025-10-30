@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
@@ -91,9 +91,10 @@ function App() {
     return () => {
       ws.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchMicrosites = async () => {
+  const fetchMicrosites = useCallback(async () => {
     try {
       setLoading(true);
       const params = {};
@@ -121,7 +122,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchTerm, dateRange, campaignFilter, sortBy, sortOrder]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -129,7 +130,7 @@ function App() {
     }, 300); // Debounce search
 
     return () => clearTimeout(timeoutId);
-  }, [searchTerm, regionFilter, dateRange, campaignFilter, sortBy, sortOrder]);
+  }, [searchTerm, regionFilter, dateRange, campaignFilter, sortBy, sortOrder, fetchMicrosites]);
 
   const filteredMicrosites = microsites.filter(site => {
     // Filter by search term
