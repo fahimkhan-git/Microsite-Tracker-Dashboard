@@ -4,7 +4,7 @@
   "description": "Real-time microsite tracking dashboard for Google Ads visitors and leads",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "npm run prisma:deploy && node server.js",
     "dev": "nodemon server.js",
     
     "prisma:migrate": "npx prisma migrate dev",

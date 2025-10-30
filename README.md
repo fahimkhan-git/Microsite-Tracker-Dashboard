@@ -47,16 +47,17 @@ Visit: http://localhost:3000
 - Frontend app: GitHub Pages via GitHub Actions (workflow included)
 
 ### Backend on Railway
-- Service → Variables:
+- Create a new Railway service from this repo (Dockerfile at root).
+- Set Variables:
   - `NODE_ENV=production`
-  - `DATABASE_URL=postgres://...` (for persistence)
-  - Optional: `CLIENT_URL=https://<your-gh-pages-domain>`
-- Deploy from `main`. The Dockerfile installs Prisma and runs `server.js`.
+  - `DATABASE_URL=postgres://...` (your production Postgres)
+  - `CLIENT_URL=https://<user>.github.io/<repo>` (your GitHub Pages URL)
+- Deploy from `main`. Start command runs Prisma migrations automatically.
 
 ### Frontend on GitHub Pages
-- The workflow `.github/workflows/deploy-client.yml` builds `client/` and deploys to Pages.
 - In GitHub → Settings → Pages: set Source to “GitHub Actions”.
-- Optional: set repository secret `REACT_APP_API_BASE_URL` to your Railway API URL (e.g. `https://<railway-app>.up.railway.app`).
+- Add repository secret `FRONTEND_API_URL` with your Railway API base (e.g. `https://<railway-app>.up.railway.app/api`).
+- The workflow `.github/workflows/deploy-pages.yml` builds `client/` and deploys to Pages with `PUBLIC_URL=.` so no fixed homepage needed.
 
 ---
 
