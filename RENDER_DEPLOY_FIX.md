@@ -3,9 +3,13 @@
 ## Problem
 Render is trying to run `npx wrangler deploy` after the build completes, but Wrangler is for Cloudflare Workers, not Render deployment.
 
-## Solution
+## ✅ Solution (Updated)
 
-### Option 1: Remove Deploy Command in Render Dashboard (Recommended)
+We've added a no-op deploy command in `render.yaml` to override the dashboard setting. **You still need to clear it in the dashboard for this to work properly.**
+
+## Solution Options
+
+### Option 1: Remove Deploy Command in Render Dashboard (REQUIRED - DO THIS FIRST)
 
 1. Go to your Render dashboard: https://dashboard.render.com
 2. Click on your service: `microsite-tracker-backend`
@@ -20,14 +24,18 @@ Render is trying to run `npx wrangler deploy` after the build completes, but Wra
 - ✅ Start Command: `npm start`
 - ❌ Deploy Command: (empty or not set)
 
-### Option 2: If Deploy Command Field is Required
+### Option 2: Set Deploy Command to Empty String (Alternative)
 
-If Render requires a deploy command field, set it to:
-```
-echo "Build complete, starting server..."
-```
+If you can't remove the deploy command field entirely in the dashboard:
 
-This will just print a message and let Render continue to the start command.
+1. Go to **Settings** → **Build & Deploy**
+2. Set **Deploy Command** to:
+   ```
+   echo "Build complete"
+   ```
+3. Click **Save Changes**
+
+**Note:** The `render.yaml` already has a deploy command that does this. Clearing it in the dashboard is still the best option.
 
 ---
 
