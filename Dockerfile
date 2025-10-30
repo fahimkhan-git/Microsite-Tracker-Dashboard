@@ -15,7 +15,7 @@ RUN npx prisma generate
 
 # Copy client files
 COPY client/package*.json ./client/
-RUN cd client && npm ci
+RUN cd client && npm install
 
 # Copy all source files
 COPY . .
