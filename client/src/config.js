@@ -20,6 +20,8 @@ function resolveApiBase() {
 function toWsUrl(httpUrl) {
   try {
     if (!httpUrl) return '';
+    // Workers do not support WS; disable WS when using workers.dev
+    if (httpUrl.includes('workers.dev')) return '';
     return httpUrl.replace(/^http:/, 'ws:').replace(/^https:/, 'wss:').replace(/\/?api$/, '');
   } catch {
     return '';

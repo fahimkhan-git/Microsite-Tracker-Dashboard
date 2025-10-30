@@ -16,19 +16,20 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     
-    // CORS headers for all responses
+    // CORS headers for all responses (reflect origin and vary)
+    const origin = request.headers.get('Origin') || '*';
     const corsHeaders = {
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': origin,
+      'Vary': 'Origin',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Max-Age': '86400',
     };
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
-      return new Response(null, {
-        status: 204,
-        headers: corsHeaders,
-      });
+      // Preflight response
+      return new Response(null, { status: 204, headers: corsHeaders });
     }
 
     // Get backend URL from environment
@@ -47,6 +48,11 @@ export default {
     // Track lead endpoint (forward to Express backend)
     if (url.pathname === '/api/track/lead' && request.method === 'POST') {
       return handleTrackLead(request, backendUrl, corsHeaders);
+    }
+
+    // Proxy read APIs to backend (microsites, campaigns, export, health, etc.)
+    if (url.pathname.startsWith('/api/') && request.method === 'GET') {
+      return proxyGetToBackend(request, backendUrl, corsHeaders);
     }
 
     // Health check
@@ -240,6 +246,40 @@ async function handleTrackLead(request, backendUrl, corsHeaders) {
         ...corsHeaders,
         'Content-Type': 'application/json',
       },
+    });
+  }
+}
+
+/**
+ * Proxy GET requests under /api/* to the backend, preserving query string
+ */
+async function proxyGetToBackend(request, backendUrl, corsHeaders) {
+  try {
+    const url = new URL(request.url);
+    const target = `${backendUrl}${url.pathname}${url.search}`;
+    const backendResponse = await fetch(target, {
+      method: 'GET',
+      headers: {
+        'User-Agent': request.headers.get('User-Agent') || 'Cloudflare-Worker',
+        // Pass through any auth headers if ever needed
+      },
+    });
+
+    const respHeaders = new Headers(backendResponse.headers);
+    // Ensure CORS headers are present
+    for (const [k, v] of Object.entries(corsHeaders)) {
+      respHeaders.set(k, v);
+    }
+
+    const body = await backendResponse.arrayBuffer();
+    return new Response(body, {
+      status: backendResponse.status,
+      headers: respHeaders,
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 }

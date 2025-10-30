@@ -34,54 +34,50 @@ function App() {
   useEffect(() => {
     fetchMicrosites();
     
-    // Connect to WebSocket for real-time updates
-    const ws = new WebSocket(WS_URL);
+    // Connect to WebSocket for real-time updates (only if configured)
+    const ws = WS_URL ? new WebSocket(WS_URL) : null;
     
-    ws.onopen = () => {
-      console.log('WebSocket connected');
-    };
+    if (ws) {
+      ws.onopen = () => {
+        console.log('WebSocket connected');
+      };
     
-    ws.onmessage = (event) => {
-      const message = JSON.parse(event.data);
+      ws.onmessage = (event) => {
+        const message = JSON.parse(event.data);
       
-      if (message.type === 'visit' || message.type === 'lead' || message.type === 'status-update') {
-        // Refresh data when new visit/lead is tracked or status updated
-        fetchMicrosites();
-      } else if (message.type === 'alerts') {
-        setAlerts(message.data.alerts);
-        // Show browser notification if permission granted
-        if (Notification.permission === 'granted') {
-          message.data.alerts.forEach(alert => {
-            if (alert.noVisit24h) {
-              new Notification(`⚠️ No Visits Alert`, {
-                body: `${alert.domain} has no visits in the last 24 hours`,
-                icon: '/favicon.ico'
-              });
-            }
-            if (alert.noLead24h) {
-              new Notification(`⚠️ No Leads Alert`, {
-                body: `${alert.domain} has no leads in the last 24 hours`,
-                icon: '/favicon.ico'
-              });
-            }
-          });
+        if (message.type === 'visit' || message.type === 'lead' || message.type === 'status-update') {
+          // Refresh data when new visit/lead is tracked or status updated
+          fetchMicrosites();
+        } else if (message.type === 'alerts') {
+          setAlerts(message.data.alerts);
+          // Show browser notification if permission granted
+          if (Notification.permission === 'granted') {
+            message.data.alerts.forEach(alert => {
+              if (alert.noVisit24h) {
+                new Notification(`⚠️ No Visits Alert`, {
+                  body: `${alert.domain} has no visits in the last 24 hours`,
+                  icon: '/favicon.ico'
+                });
+              }
+              if (alert.noLead24h) {
+                new Notification(`⚠️ No Leads Alert`, {
+                  body: `${alert.domain} has no leads in the last 24 hours`,
+                  icon: '/favicon.ico'
+                });
+              }
+            });
+          }
         }
-      }
-    };
+      };
     
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
+      ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
     
-    ws.onclose = () => {
-      console.log('WebSocket disconnected');
-      // Attempt to reconnect after 3 seconds
-      setTimeout(() => {
-        if (ws.readyState === WebSocket.CLOSED) {
-          // This will be handled by useEffect cleanup
-        }
-      }, 3000);
-    };
+      ws.onclose = () => {
+        console.log('WebSocket disconnected');
+      };
+    }
     
     // Request notification permission
     if ('Notification' in window && Notification.permission === 'default') {
@@ -89,7 +85,7 @@ function App() {
     }
     
     return () => {
-      ws.close();
+      if (ws) ws.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
