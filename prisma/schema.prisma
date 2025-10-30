@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Microsite {
+  id          String   @id @default(cuid())
+  domain      String   @unique
+  name        String?
+  region      String?  // Region filter: navi-mumbai, thane, western-mumbai, etc.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  visits      Visit[]
+  leads       Lead[]
+  
+  // Status tracking
+  isLive            Boolean?
+  statusCode        Int?
+  sslValid          Boolean?
+  sslExpiry         DateTime?
+  websiteError      String?
+  responseTime      Int?        // in milliseconds
+  websiteLastChecked DateTime?
+  
+  // Form status
+  hasForm           Boolean?
+  formCount         Int?
+  formWorking       Boolean?
+  formError         String?
+  formLastChecked   DateTime?
+
+  @@index([domain])
+  @@index([region])
+}
+
+model Visit {
+  id          String   @id @default(cuid())
+  micrositeId String
+  microsite   Microsite @relation(fields: [micrositeId], references: [id], onDelete: Cascade)
+  ipAddress   String?
+  userAgent   String?
+  referrer    String?
+  gclid       String?  // Google Click ID from Google Ads
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  isFromGoogleAds Boolean @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([micrositeId])
+  @@index([createdAt])
+  @@index([isFromGoogleAds])
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  micrositeId String
+  microsite   Microsite @relation(fields: [micrositeId], references: [id], onDelete: Cascade)
+  email       String?
+  phone       String?
+  name        String?
+  formData    String?  // JSON string for additional form data
+  gclid       String?  // Google Click ID from Google Ads
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  isFromGoogleAds Boolean @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([micrositeId])
+  @@index([createdAt])
+  @@index([isFromGoogleAds])
+}
+

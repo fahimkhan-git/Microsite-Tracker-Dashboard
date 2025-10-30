@@ -1,0 +1,52 @@
+node_modules/
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+.env.test
+.DS_Store
+dist/
+build/
+*.log
+.vscode/
+client/node_modules/
+client/build/
+client/.env
+client/.env.*
+
+# Database backups and sensitive files
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# Prisma
+prisma/migrations/*.sql.bak
+
+# Deployment files with sensitive data
+railway.toml.local
+render.yaml.local
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.DS_Store
+**/.DS_Store
+
+.env.bak
+
+# Cloudflare Workers
+workers/.wrangler/
+workers/node_modules/
+workers/.dev.vars
+
+# Build outputs
+client/build/
+dist/
+build/

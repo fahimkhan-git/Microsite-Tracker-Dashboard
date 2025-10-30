@@ -1,0 +1,192 @@
+.date-filter-container {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.date-presets {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.date-presets button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e2e8f0;
+  background: white;
+  color: #4a5568;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.date-presets button:hover {
+  border-color: #667eea;
+  color: #667eea;
+  background: #f8f9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.date-presets button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
+  transform: scale(1.05);
+}
+
+.date-picker-group {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  flex: 1;
+}
+
+.calendar-icon {
+  color: #667eea;
+  font-size: 1.375rem;
+}
+
+.date-picker {
+  padding: 0.75rem 1.125rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  color: #2d3748;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
+  cursor: pointer;
+}
+
+.date-picker:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.date-separator {
+  color: #718096;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.export-btn {
+  padding: 0.75rem 1.75rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: auto;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.export-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+.export-btn:active {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .date-filter-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.25rem;
+    gap: 1rem;
+    border-radius: 12px;
+  }
+
+  .date-presets {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .date-presets button {
+    flex: 1;
+    min-width: calc(33.333% - 0.5rem);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.75rem;
+  }
+
+  .date-picker-group {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .date-picker {
+    flex: 1;
+    min-width: calc(50% - 0.3125rem);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+
+  .calendar-icon {
+    font-size: 1.125rem;
+  }
+
+  .date-separator {
+    font-size: 0.875rem;
+    margin: 0 0.25rem;
+  }
+
+  .export-btn {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .date-filter-container {
+    padding: 1rem;
+  }
+
+  .date-presets button {
+    min-width: calc(50% - 0.25rem);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.6875rem;
+  }
+
+  .date-picker {
+    min-width: 100%;
+    padding: 0.625rem 0.75rem;
+  }
+
+  .date-picker-group {
+    flex-direction: column;
+  }
+
+  .date-separator {
+    display: none;
+  }
+}

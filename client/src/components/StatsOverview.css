@@ -1,0 +1,234 @@
+.stats-overview {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f7fafc;
+}
+
+.overview-header h2 {
+  font-size: 1.625rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.microsite-count {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border-radius: 25px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.overview-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.75rem;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e6edff;
+}
+
+.overview-stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+}
+
+.stat-icon-wrapper {
+  width: 65px;
+  height: 65px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.875rem;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon-wrapper.blue {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-icon-wrapper.green {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.stat-icon-wrapper.purple {
+  background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+}
+
+.stat-icon-wrapper.orange {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 2.25rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+  letter-spacing: -1px;
+}
+
+.stat-title {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-change {
+  font-size: 0.75rem;
+  color: #48bb78;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .stats-overview {
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .overview-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .overview-header h2 {
+    font-size: 1.375rem;
+    text-align: center;
+  }
+
+  .microsite-count {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .overview-stat-card {
+    padding: 1.25rem;
+    gap: 1rem;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .stat-content {
+    text-align: center;
+  }
+
+  .stat-icon-wrapper {
+    width: 55px;
+    height: 55px;
+    font-size: 1.5rem;
+    margin: 0 auto;
+  }
+
+  .stat-number {
+    font-size: 1.875rem;
+    text-align: center;
+  }
+
+  .stat-title {
+    font-size: 0.8125rem;
+    text-align: center;
+  }
+
+  .stat-change {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-overview {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .overview-header {
+    align-items: center;
+    text-align: center;
+  }
+
+  .overview-header h2 {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .overview-stat-card {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .stat-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.375rem;
+    margin: 0 auto;
+  }
+
+  .stat-content {
+    text-align: center;
+    width: 100%;
+  }
+
+  .stat-number {
+    font-size: 1.625rem;
+    text-align: center;
+  }
+
+  .stat-title {
+    text-align: center;
+  }
+
+  .stat-change {
+    text-align: center;
+  }
+}
+
